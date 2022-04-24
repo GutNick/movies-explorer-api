@@ -11,7 +11,7 @@ const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/errorHandler');
 const limiter = require('./middlewares/limiter');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
 mongoose.connect('mongodb://localhost:27017/moviesdb');
 app.use(requestLogger);
