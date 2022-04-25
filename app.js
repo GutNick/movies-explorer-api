@@ -10,6 +10,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/errorHandler');
 const limiter = require('./middlewares/limiter');
+const auth = require('./middlewares/auth');
 
 const { PORT = 3001 } = process.env;
 const app = express();
@@ -21,7 +22,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', router);
-app.use((req, res, next) => {
+app.use(auth, (req, res, next) => {
   next(new NotFoundError('Маршрут не найден'));
 });
 app.use(errorLogger);
