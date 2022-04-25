@@ -53,12 +53,12 @@ module.exports.deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         next(new NotFoundError('Фильм не найден'));
-      }
-      if (movie.owner.toString() !== req.user._id) {
+      } else if (movie.owner.toString() !== req.user._id) {
         next(new ForbiddenError('Нельзя удалить чужой фильм'));
+      } else {
+        movie.remove()
+          .then(() => res.send({ message: 'Фильм удален' }));
       }
-      movie.remove()
-        .then(() => res.send({ message: 'Фильм удален' }));
     })
     .catch(next);
 };

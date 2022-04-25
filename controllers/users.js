@@ -60,6 +60,8 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные'));
+      } else if (err.name === 'MongoServerError' && err.code === 11000) {
+        next(new ConflictError('Этот email уже занят'));
       } else {
         next(err);
       }
@@ -77,11 +79,5 @@ module.exports.login = (req, res, next) => {
       );
       res.send({ token });
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new UnauthorizedError('Неверный логин или пароль.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(() => next(new UnauthorizedError('Неверный логин или пароль.')));
 };
