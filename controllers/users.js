@@ -51,7 +51,7 @@ module.exports.updateUser = (req, res, next) => {
     { name, email },
     {
       new: true,
-      runValidators: false,
+      runValidators: true,
     },
   )
     .then((user) => {
