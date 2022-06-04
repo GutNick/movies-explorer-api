@@ -13,14 +13,14 @@ const validateUrl = (value, helpers) => {
 module.exports.validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().email().required(),
+    email: Joi.string().required(),
     password: Joi.string().required().min(8),
   }),
 });
 
 module.exports.validateLogin = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email().required(),
+    email: Joi.string().required(),
     password: Joi.string().required().min(8),
   }),
 });
@@ -28,7 +28,7 @@ module.exports.validateLogin = celebrate({
 module.exports.validateUpdateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().email().required(),
+    email: Joi.string().required(),
   }),
 });
 
